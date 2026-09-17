@@ -87,7 +87,7 @@ class ApplicationController extends Controller
                 ->count();
 
             if ($checkStudentApplication >= 4) {
-                return $this->respondError(message: 'A student can have only a maximum of 4 applications.');
+                return $this->respondUnprocessed('A student can have only a maximum of 4 applications.');
             }
 
             $application = StudentApplications::create($createStudentApplicationRequest->validated() + ['student_id' => $student->id]);

@@ -4,8 +4,11 @@
 
             <form @submit.prevent="handleSubmit" class="space-y-8">
                 <!-- Error/Success Messages -->
-                <div v-if="error" class="p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-500 text-sm">
-                    {{ error }}
+                <div v-if="errors.length" class="p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-500 text-sm">
+                    <p v-if="errors.length > 1" class="font-medium mb-1">Could not submit the application:</p>
+                    <ul :class="errors.length > 1 ? 'list-disc pl-5 space-y-1' : ''">
+                        <li v-for="(message, idx) in errors" :key="idx" class="break-words">{{ message }}</li>
+                    </ul>
                 </div>
 
                 <div v-if="success" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
@@ -354,8 +357,11 @@
                                           d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
                                 </svg>
                                 <p class="text-sm text-muted-foreground mb-2">Click to upload or drag and drop</p>
-                                <p class="text-xs text-muted-foreground">PDF, DOC, DOCX (max. 10MB each)</p>
+                                <p class="text-xs text-muted-foreground">PDF, DOC, DOCX, JPG, PNG (max. 10MB each)</p>
                             </div>
+                            <ul v-if="fileErrors.length" class="mt-3 space-y-1 text-sm text-red-500">
+                                <li v-for="(message, idx) in fileErrors" :key="idx" class="break-words">{{ message }}</li>
+                            </ul>
                             <div v-if="form.application_documents.length > 0" class="mt-4 space-y-2">
                                 <div v-for="(file, index) in form.application_documents" :key="index"
                                      class="flex items-center justify-between gap-3 bg-muted/50 p-3 rounded border border-border">
@@ -372,7 +378,7 @@
                                     </button>
                                 </div>
                             </div>
-                            <input ref="documentInput" type="file" multiple accept=".pdf,.doc,.docx" class="hidden"
+                            <input ref="documentInput" type="file" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" class="hidden"
                                    @change="handleFileUpload"/>
                         </div>
                     </div>
@@ -516,9 +522,12 @@
                         </div>
 
                         <!-- Error/Success Messages -->
-                        <div v-if="error"
+                        <div v-if="errors.length"
                              class="p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-500 text-sm">
-                            {{ error }}
+                            <p v-if="errors.length > 1" class="font-medium mb-1">Could not submit the application:</p>
+                            <ul :class="errors.length > 1 ? 'list-disc pl-5 space-y-1' : ''">
+                                <li v-for="(message, idx) in errors" :key="idx" class="break-words">{{ message }}</li>
+                            </ul>
                         </div>
 
                         <div v-if="success" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
@@ -568,8 +577,11 @@
 <script>
 import {ref, onMounted, computed, watch} from 'vue'
 import {useRouter} from 'vue-router'
-import {applicationsAPI, coursesAPI, countriesAPI, schoolsAPI} from '../services/api'
+import {applicationsAPI, coursesAPI, countriesAPI, getApiErrorMessages, schoolsAPI} from '../services/api'
 import DatePickerField from '../components/DatePickerField.vue'
+
+const ALLOWED_EXTENSIONS = ['pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png']
+const MAX_FILE_SIZE = 10 * 1024 * 1024
 
 export default {
     name: 'CreateApplication',
@@ -579,7 +591,8 @@ export default {
 
         // Form state
         const loading = ref(false)
-        const error = ref(null)
+        const errors = ref([])
+        const fileErrors = ref([])
         const success = ref(false)
         const successMessage = ref('Application submitted successfully!')
         const isDragOver = ref(false)
@@ -738,8 +751,14 @@ export default {
         // File handling
         const handleFileUpload = (e) => {
             const files = Array.from(e.target.files)
+            fileErrors.value = []
             files.forEach(file => {
-                if (file.size <= 10 * 1024 * 1024) {
+                const extension = file.name.split('.').pop().toLowerCase()
+                if (!ALLOWED_EXTENSIONS.includes(extension)) {
+                    fileErrors.value.push(`${file.name}: file type .${extension} is not allowed. Use ${ALLOWED_EXTENSIONS.join(', ')}.`)
+                } else if (file.size > MAX_FILE_SIZE) {
+                    fileErrors.value.push(`${file.name}: file is ${(file.size / 1024 / 1024).toFixed(1)}MB, the maximum is 10MB.`)
+                } else {
                     form.value.application_documents.push(file)
                 }
             })
@@ -757,7 +776,7 @@ export default {
         const handleSubmit = async () => {
             try {
                 loading.value = true
-                error.value = null
+                errors.value = []
 
                 const response = await applicationsAPI.create(form.value)
                 successMessage.value = response.data?.message || 'Application submitted successfully!'
@@ -766,7 +785,11 @@ export default {
 
                 setTimeout(() => router.push('/applications'), 2000)
             } catch (err) {
-                error.value = err.response?.data?.message || err.response?.data?.error?.message || 'Failed to submit application'
+                console.error('Application submit failed:', err.response?.status, err.response?.data ?? err)
+                errors.value = getApiErrorMessages(err, {
+                    fallback: 'Failed to submit application',
+                    fileNames: form.value.application_documents.map(file => file.name),
+                })
             } finally {
                 loading.value = false
             }
@@ -780,7 +803,7 @@ export default {
 
         return {
             // Form
-            form, loading, error, success, successMessage, isDragOver, showReviewModal, maxBirthDate,
+            form, loading, errors, fileErrors, success, successMessage, isDragOver, showReviewModal, maxBirthDate,
             // Dropdowns
             courses, schools, countries,
             courseSearch, schoolSearch, countrySearch,

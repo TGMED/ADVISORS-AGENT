@@ -32,7 +32,7 @@ class CreateStudentApplicationRequest extends FormRequest
             'additional_notes' => 'nullable|string',
             'signature' => 'nullable|string',
             'application_documents' => 'nullable|array',
-            'application_documents.*' => 'file|mimes:jpg,jpeg,png,pdf,doc|max:10240',
+            'application_documents.*' => 'file|mimes:jpg,jpeg,png,pdf,doc,docx|max:10240',
         ];
     }
 
@@ -52,7 +52,8 @@ class CreateStudentApplicationRequest extends FormRequest
             'additional_notes.string' => 'Additional notes must be a string',
             'application_documents.array' => 'Application documents must be an array',
             'application_documents.*.file' => 'Each application document must be a file',
-            'application_documents.*.mimes' => 'Application documents must be a file of type: jpg, jpeg, png, pdf',
+            'application_documents.*.uploaded' => 'The file failed to upload. The server accepts files up to ' . ini_get('upload_max_filesize') . ' each',
+            'application_documents.*.mimes' => 'Application documents must be a file of type: jpg, jpeg, png, pdf, doc, docx',
             'application_documents.*.max' => 'Each application document must not exceed 10MB in size',
         ];
     }

@@ -25,6 +25,43 @@ api.interceptors.response.use((response) => response, (error) => {
     return Promise.reject(error)
 },)
 
+/**
+ * Turn an Axios error into a list of human-readable messages.
+ * fileNames maps "application_documents.N" validation keys back to the attached file name.
+ */
+export const getApiErrorMessages = (err, {fallback = 'Request failed', fileNames = []} = {}) => {
+    const response = err?.response
+    const data = response?.data
+    const serverMessage = typeof data === 'object' ? (data?.message || data?.error?.message) : null
+
+    if (!response) {
+        if (err?.code === 'ECONNABORTED') {
+            return ['The request timed out. Large files can take a while, please try again.']
+        }
+        return ['Could not reach the server. Check your internet connection and try again.']
+    }
+
+    if (response.status === 413) {
+        return [serverMessage || 'The attached files are too large for the server to accept. Try fewer or smaller files.']
+    }
+
+    if (response.status === 422 && data?.errors) {
+        return Object.entries(data.errors).flatMap(([field, messages]) => {
+            const match = field.match(/^application_documents\.(\d+)$/)
+            const prefix = match ? `${fileNames[Number(match[1])] || `File ${Number(match[1]) + 1}`}: ` : ''
+            return messages.map(message => prefix + message)
+        })
+    }
+
+    if (response.status >= 500) {
+        return [serverMessage && serverMessage !== 'Server Error'
+            ? `Server error (${response.status}): ${serverMessage}`
+            : `Server error (${response.status}). Please try again or contact support.`]
+    }
+
+    return [serverMessage || `${fallback} (status ${response.status})`]
+}
+
 const isCounselor = () => {
     const userStr = localStorage.getItem('user')
     if (!userStr) return false
