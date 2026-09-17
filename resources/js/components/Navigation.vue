@@ -1,20 +1,20 @@
 <template>
     <nav v-if="!isHidden" class="border-b border-primary bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-        <div class="container mx-auto px-6">
+        <div class="container mx-auto px-4 sm:px-6">
             <div class="flex items-center justify-between h-16">
-                <div class="flex items-center space-x-8">
+                <div class="flex items-center space-x-4 xl:space-x-8 min-w-0">
                     <router-link to="/dashboard"
                                  class="flex items-center space-x-3 hover:opacity-80 transition-opacity">
                         <img :src="logo()" alt="Advisors Academy" class="h-8 w-auto"/>
                     </router-link>
 
-                    <div class="hidden md:flex items-center space-x-1">
+                    <div class="hidden lg:flex items-center space-x-1">
                         <!-- Filter navigation items based on user role -->
                         <router-link
                             v-for="item in filteredNavItems"
                             :key="item.path"
                             :to="item.path"
-                            class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:bg-muted relative"
+                            class="px-3 xl:px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-all duration-200 hover:bg-muted relative"
                             :class="isActive(item.path) ? 'bg-primary/10 text-primary' : 'text-foreground/70 hover:text-foreground'"
                         >
                             <div class="flex items-center space-x-2">
@@ -30,7 +30,7 @@
                     </div>
                 </div>
 
-                <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-1 sm:space-x-4">
                     <button
                         @click="toggleTheme"
                         class="p-2 hover:bg-muted rounded-lg transition-all duration-200 hover:scale-110"
@@ -54,9 +54,9 @@
                         <span class="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full"></span>
                     </button>
 
-                    <div class="flex items-center space-x-3 pl-4 border-l border-border">
+                    <div class="flex items-center space-x-3 pl-2 sm:pl-4 border-l border-border">
                         <!-- Display user info with role -->
-                        <div class="hidden lg:block text-right max-w-[150px]">
+                        <div class="hidden xl:block text-right max-w-[150px]">
                             <div class="text-sm font-medium truncate"
                                  :title="`${currentUser?.first_name} ${currentUser?.last_name}`">
                                 {{ currentUser?.first_name }} {{ currentUser?.last_name }}
@@ -75,7 +75,7 @@
                             </button>
                             <div v-if="showUserMenu"
                                  class="absolute right-0 mt-2 w-48 bg-card border border-border rounded-lg shadow-lg py-2 z-50">
-                                <div class="px-4 py-2 border-b border-border lg:hidden">
+                                <div class="px-4 py-2 border-b border-border xl:hidden">
                                     <div class="text-sm font-medium truncate"
                                          :title="`${currentUser?.first_name} ${currentUser?.last_name}`">
                                         {{ currentUser?.first_name }} {{ currentUser?.last_name }}
@@ -100,7 +100,7 @@
                     </div>
 
                     <button @click="toggleMobileMenu"
-                            class="md:hidden p-2 hover:bg-muted rounded-lg transition-all duration-200">
+                            class="lg:hidden p-2 hover:bg-muted rounded-lg transition-all duration-200" aria-label="Toggle menu">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                   d="M4 6h16M4 12h16M4 18h16"/>
@@ -111,7 +111,7 @@
 
             <!-- Mobile menu with logout button -->
             <!-- Filter mobile menu items based on user role -->
-            <div v-if="mobileMenuOpen" class="md:hidden py-4 border-t border-border animate-slide-down">
+            <div v-if="mobileMenuOpen" class="lg:hidden py-4 border-t border-border animate-slide-down">
                 <router-link
                     v-for="item in filteredNavItems"
                     :key="item.path"
