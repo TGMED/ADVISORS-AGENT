@@ -35,11 +35,11 @@
             </div>
         </div>
 
-        <div class="w-full lg:w-1/2 flex items-center justify-center p-8 lg:p-12">
+        <div class="w-full lg:w-1/2 flex items-center justify-center p-4 sm:p-8 lg:p-12">
             <div class="w-full max-w-md space-y-8 animate-slide-up">
                 <div class="flex items-center justify-between">
                     <div class="space-y-2">
-                        <h1 class="text-3xl font-bold tracking-tight">Create your account</h1>
+                        <h1 class="text-2xl sm:text-3xl font-bold tracking-tight">Create your account</h1>
                         <p class="text-muted-foreground">Start managing student applications today</p>
                     </div>
                     <button
@@ -60,7 +60,7 @@
 
                 <form @submit.prevent="handleRegister" class="space-y-6">
                     <div class="space-y-4">
-                        <div class="grid grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div class="space-y-2 group">
                                 <label for="first_name"
                                        class="text-sm font-medium transition-colors group-focus-within:text-primary">First

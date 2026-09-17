@@ -4,7 +4,7 @@
             Left side - Welcome content
             <div class="text-center md:text-left space-y-6">
                 <div class="space-y-4">
-                    <h1 class="text-5xl font-bold text-gray-900">
+                    <h1 class="text-4xl sm:text-5xl font-bold text-gray-900">
                         Student Management System
                     </h1>
                     <p class="text-xl text-gray-600">
@@ -52,7 +52,7 @@
             </div>
 
             Right side - Auth options
-            <div class="bg-white rounded-2xl shadow-xl p-8 space-y-6">
+            <div class="bg-white rounded-2xl shadow-xl p-6 sm:p-8 space-y-6">
                 <div class="text-center space-y-2">
                     <h2 class="text-3xl font-bold text-gray-900">Get Started</h2>
                     <p class="text-gray-600">Choose an option to continue</p>

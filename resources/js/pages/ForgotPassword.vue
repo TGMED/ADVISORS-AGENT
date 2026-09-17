@@ -1,11 +1,11 @@
 <template>
     <div class="min-h-screen flex animate-fade-in">
-        <div class="w-full lg:w-1/2 flex items-center justify-center p-8 lg:p-12">
+        <div class="w-full lg:w-1/2 flex items-center justify-center p-4 sm:p-8 lg:p-12">
             <div class="w-full max-w-md space-y-8 animate-slide-up">
                 <div class="flex items-center justify-between">
                     <div class="space-y-2">
                         <img :src="logo()" alt="Advisors Academy" class="h-20 w-auto mb-4"/>
-                        <h1 class="text-3xl font-bold tracking-tight">Reset Password</h1>
+                        <h1 class="text-2xl sm:text-3xl font-bold tracking-tight">Reset Password</h1>
                         <p class="text-muted-foreground">We'll help you get back into your account</p>
                     </div>
                     <button

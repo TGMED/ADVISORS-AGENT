@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen bg-background flex items-center justify-center px-6 animate-fade-in">
+    <div class="min-h-screen bg-background flex items-center justify-center px-4 sm:px-6 py-8 animate-fade-in">
         <div class="max-w-2xl w-full text-center">
             <!-- 403 Illustration -->
             <div class="mb-8 animate-bounce">
@@ -10,14 +10,14 @@
             </div>
 
             <!-- Error Code -->
-            <h1 class="text-8xl font-bold text-red-500 mb-4 animate-slide-up">403</h1>
+            <h1 class="text-6xl sm:text-8xl font-bold text-red-500 mb-4 animate-slide-up">403</h1>
 
             <!-- Error Message -->
-            <h2 class="text-3xl font-bold mb-4 animate-slide-up" style="animation-delay: 0.1s;">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-4 animate-slide-up" style="animation-delay: 0.1s;">
                 Access Denied
             </h2>
 
-            <p class="text-muted-foreground text-lg mb-8 animate-slide-up" style="animation-delay: 0.2s;">
+            <p class="text-muted-foreground text-base sm:text-lg mb-8 animate-slide-up" style="animation-delay: 0.2s;">
                 You don't have permission to access this page. This area is restricted to specific user roles.
             </p>
 
@@ -26,7 +26,7 @@
                  style="animation-delay: 0.3s;">
                 <button
                     @click="goBack"
-                    class="px-6 py-3 bg-muted text-foreground rounded-lg font-medium hover:bg-muted/80 transition-all duration-200 hover:shadow-lg hover:scale-105 flex items-center gap-2">
+                    class="px-6 py-3 bg-muted text-foreground rounded-lg font-medium hover:bg-muted/80 transition-all duration-200 hover:shadow-lg hover:scale-105 flex items-center justify-center gap-2 w-full sm:w-auto">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
@@ -35,7 +35,7 @@
 
                 <router-link
                     to="/dashboard"
-                    class="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-all duration-200 hover:shadow-lg hover:scale-105 flex items-center gap-2">
+                    class="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-all duration-200 hover:shadow-lg hover:scale-105 flex items-center justify-center gap-2 w-full sm:w-auto">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                               d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
