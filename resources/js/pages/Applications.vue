@@ -363,8 +363,10 @@ const fetchApplications = async () => {
 
         applications.value = applicationsData.map(application => ({
             id: application.id,
-            courseName: application.course_name.trim(),
-            studentName: `${application.student.first_name} ${application.student.middle_name} ${application.student.last_name}`,
+            courseName: (application.course_name || application.course?.name || 'N/A').trim(),
+            studentName: [application.student?.first_name, application.student?.middle_name, application.student?.last_name]
+                .filter(Boolean)
+                .join(' ') || 'N/A',
             status: application.status,
             submittedAt: application.created_at ? new Date(application.created_at).toLocaleDateString() : 'N/A',
             classOfDegree: application.class_of_degree || 'N/A',
