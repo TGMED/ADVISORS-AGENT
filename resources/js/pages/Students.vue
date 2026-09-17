@@ -2,9 +2,9 @@
     <!-- add overflow-hidden when modals are open to prevent background scrolling -->
     <div class="min-h-screen bg-background animate-fade-in"
          :class="{ 'overflow-hidden': showDetailsModal || showEditModal || showApplicationsModal }">
-        <main class="container mx-auto px-6 py-8">
+        <main class="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
             <div class="mb-8 animate-slide-up">
-                <h1 class="text-3xl font-bold mb-2">Student List & Applications</h1>
+                <h1 class="text-2xl sm:text-3xl font-bold mb-2">Student List & Applications</h1>
                 <p class="text-muted-foreground">Manage and track all students & applications</p>
             </div>
 
@@ -22,11 +22,11 @@
                 <button @click="fetchStudents" class="ml-4 underline hover:no-underline">Retry</button>
             </div>
 
-            <div v-else class="glass-card rounded-xl p-6 animate-slide-up" style="animation-delay: 0.1s;">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+            <div v-else class="glass-card rounded-xl p-4 sm:p-6 animate-slide-up" style="animation-delay: 0.1s;">
+                <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-4 mb-6">
                     <div
-                        class="flex-1 flex flex-col md:flex-row items-stretch md:items-center space-y-4 md:space-y-0 md:space-x-4">
-                        <div class="flex-1 relative">
+                        class="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-row lg:items-center gap-3">
+                        <div class="relative sm:col-span-2 lg:flex-1 lg:min-w-48">
                             <svg class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
                                  fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -47,20 +47,20 @@
                             <option value="Australia">Australia</option>
                             <option value="United States">United States</option>
                         </select>
-                        <div class="flex items-center space-x-2">
+                        <div class="flex items-center gap-2">
                             <label class="text-sm text-muted-foreground whitespace-nowrap">From:</label>
                             <input
                                 v-model="startDate"
                                 type="date"
-                                class="px-3 py-2.5 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200 text-sm"
+                                class="px-3 py-2.5 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200 text-sm w-full min-w-0 lg:w-auto"
                             />
                         </div>
-                        <div class="flex items-center space-x-2">
+                        <div class="flex items-center gap-2">
                             <label class="text-sm text-muted-foreground whitespace-nowrap">To:</label>
                             <input
                                 v-model="endDate"
                                 type="date"
-                                class="px-3 py-2.5 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200 text-sm"
+                                class="px-3 py-2.5 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200 text-sm w-full min-w-0 lg:w-auto"
                             />
                         </div>
                         <button
@@ -75,38 +75,82 @@
                         </button>
                     </div>
 
-                    <router-link
-                        v-if="!isCounselor"
-                        to="/students/create"
-                        class="px-6 py-2.5 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-all duration-200 hover:shadow-lg hover:scale-105 flex items-center space-x-2 justify-center md:justify-start"
-                    >
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                        </svg>
-                        <span>Add Student</span>
-                    </router-link>
+                    <div v-if="!isCounselor" class="grid grid-cols-1 sm:grid-cols-2 gap-3 xl:flex">
+                        <router-link
+                            to="/students/create"
+                            class="px-6 py-2.5 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-all duration-200 hover:shadow-lg hover:scale-105 flex items-center space-x-2 justify-center whitespace-nowrap"
+                        >
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                            </svg>
+                            <span>Add Student</span>
+                        </router-link>
 
-                    <router-link
-                        v-if="!isCounselor"
-                        to="/applications/create"
-                        class="px-6 py-2.5 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-all duration-200 hover:shadow-lg hover:scale-105 flex items-center space-x-2 justify-center md:justify-start"
-                    >
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                        </svg>
-                        <span>New Application</span>
-                    </router-link>
+                        <router-link
+                            to="/applications/create"
+                            class="px-6 py-2.5 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-all duration-200 hover:shadow-lg hover:scale-105 flex items-center space-x-2 justify-center whitespace-nowrap"
+                        >
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                            </svg>
+                            <span>New Application</span>
+                        </router-link>
+                    </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-6 gap-4 mb-6">
+                <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3 sm:gap-4 mb-6">
                     <div v-for="(stat, index) in stats" :key="index"
                          class="p-4 bg-muted/50 rounded-lg border border-border hover:border-primary/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-200 cursor-pointer">
-                        <div class="text-2xl font-bold mb-1">{{ stat.value }}</div>
+                        <div class="text-xl sm:text-2xl font-bold mb-1">{{ stat.value }}</div>
                         <div class="text-sm text-muted-foreground">{{ stat.label }}</div>
                     </div>
                 </div>
 
-                <div class="overflow-x-auto">
+                <!-- Mobile/tablet card list -->
+                <div class="lg:hidden space-y-3">
+                    <div v-for="student in students" :key="student.id"
+                         class="p-4 bg-muted/30 rounded-lg border border-border space-y-3">
+                        <div class="flex items-center gap-3">
+                            <div
+                                class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
+                                <span class="text-primary text-sm font-medium">{{ student.initials }}</span>
+                            </div>
+                            <div class="min-w-0">
+                                <div class="font-medium break-words">{{ student.name }}</div>
+                                <div class="text-sm text-muted-foreground break-all">{{ student.email }}</div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">
+                            <div>
+                                <p class="text-xs text-muted-foreground mb-1">Gender</p>
+                                <p>{{ student.gender || 'N/A' }}</p>
+                            </div>
+                            <div>
+                                <p class="text-xs text-muted-foreground mb-1">Phone</p>
+                                <p class="break-all">{{ student.phone || 'N/A' }}</p>
+                            </div>
+                            <div>
+                                <p class="text-xs text-muted-foreground mb-1">Country</p>
+                                <p>{{ student.country || 'N/A' }}</p>
+                            </div>
+                            <div>
+                                <p class="text-xs text-muted-foreground mb-1">Enrolled Date</p>
+                                <p>{{ student.date }}</p>
+                            </div>
+                        </div>
+                        <button
+                            @click="viewApplications(student.id)"
+                            class="w-full sm:w-auto px-4 py-2 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-all duration-200 flex items-center justify-center space-x-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                            <span>View Applications</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="hidden lg:block overflow-x-auto">
                     <table class="w-full">
                         <thead>
                         <tr class="border-b border-border">
@@ -148,7 +192,7 @@
                                     <!-- Replaced View Details and Edit buttons with View Applications button -->
                                     <button
                                         @click="viewApplications(student.id)"
-                                        class="px-4 py-2 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-all duration-200 hover:shadow-lg hover:scale-105 animate-fade-in"
+                                        class="px-4 py-2 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-all duration-200 hover:shadow-lg hover:scale-105 animate-fade-in whitespace-nowrap"
                                         title="View Applications">
                                         <span class="flex items-center space-x-2">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -167,7 +211,7 @@
 
                 <div v-if="students.length > 0" class="mt-6 space-y-4">
                     <!-- Items per page selector -->
-                    <div class="flex items-center justify-between flex-wrap gap-4">
+                    <div class="flex flex-col lg:flex-row items-center justify-between gap-4">
                         <div class="flex items-center gap-3">
                             <label for="itemsPerPage" class="text-sm text-muted-foreground">Items per page:</label>
                             <select v-model.number="itemsPerPage" id="itemsPerPage"
@@ -188,7 +232,7 @@
                             <button
                                 @click="updatePage(Math.max(1, currentPage - 1))"
                                 :disabled="currentPage === 1"
-                                class="px-3 py-2 border border-border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-muted transition-all"
+                                class="px-3 py-2 text-sm border border-border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-muted transition-all"
                             >
                                 Previous
                             </button>
@@ -198,7 +242,7 @@
                                     :key="page"
                                     @click="updatePage(page)"
                                     :class="currentPage === page ? 'bg-primary text-primary-foreground' : 'border border-border hover:bg-muted'"
-                                    class="px-3 py-2 rounded-lg transition-all"
+                                    class="min-w-9 px-3 py-2 text-sm rounded-lg transition-all"
                                 >
                                     {{ page }}
                                 </button>
@@ -206,7 +250,7 @@
                             <button
                                 @click="updatePage(Math.min(pagination.lastPage, currentPage + 1))"
                                 :disabled="currentPage === pagination.lastPage"
-                                class="px-3 py-2 border border-border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-muted transition-all"
+                                class="px-3 py-2 text-sm border border-border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-muted transition-all"
                             >
                                 Next
                             </button>
@@ -405,10 +449,10 @@
                 <div
                     class="bg-card rounded-xl max-w-4xl w-full max-h-[90vh] border border-border shadow-2xl flex flex-col">
                     <div
-                        class="sticky top-0 bg-gradient-to-r from-primary/10 to-primary/5 border-b border-border p-6 flex items-center justify-end backdrop-blur-2xl">
+                        class="sticky top-0 bg-gradient-to-r from-primary/10 to-primary/5 border-b border-border p-4 sm:p-4 sm:p-6 flex items-center justify-between gap-3 backdrop-blur-2xl">
                         <div class="min-w-0 flex-1">
                             <h2 class="text-lg md:text-xl font-bold truncate">Document Viewer</h2>
-                            <p class="text-xs md:text-sm text-muted-foreground mt-1">
+                            <p class="text-xs md:text-sm text-muted-foreground mt-1 truncate">
                                 {{ getDocumentName(viewingDocument) }}
                             </p>
                         </div>
@@ -422,11 +466,11 @@
                     </div>
                     <div class="flex-1 overflow-y-auto bg-black/5">
                         <!-- iframe for document preview instead of opening in new tab -->
-                        <iframe :src="getDocumentUrl(viewingDocument)" class="w-full h-full"/>
+                        <iframe :src="getDocumentUrl(viewingDocument)" class="w-full h-[60vh] sm:h-[70vh]"/>
                     </div>
-                    <div class="border-t border-border p-4 bg-muted/30 flex items-center justify-end gap-3">
+                    <div class="border-t border-border p-4 bg-muted/30 flex flex-col-reverse sm:flex-row sm:items-center justify-end gap-3">
                         <a @click.stop.prevent="downloadFile(viewingDocument)"
-                           class="px-3 md:px-4 py-2 bg-primary/20 text-primary rounded-lg hover:bg-primary/30 transition-all text-xs md:text-sm font-medium flex items-center gap-2 whitespace-nowrap cursor-pointer">
+                           class="px-3 md:px-4 py-2 bg-primary/20 text-primary rounded-lg hover:bg-primary/30 transition-all text-xs md:text-sm font-medium flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                       d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
@@ -435,7 +479,7 @@
                         </a>
 
                         <a :href="getDocumentUrl(viewingDocument)" target="_blank" rel="noopener noreferrer"
-                           class="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-all text-sm font-medium">
+                           class="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-all text-sm font-medium text-center">
                             Open in New Tab
                         </a>
                     </div>
@@ -445,10 +489,10 @@
             <!-- Replaced basic edit modal with full application form that mirrors CreateApplication -->
             <div v-if="showEditModal"
                  class="fixed inset-0 backdrop-blur-sm bg-black/30 flex items-center justify-center z-50 p-4 overflow-y-auto">
-                <div class="bg-card rounded-lg w-full max-w-4xl border border-border my-8">
+                <div class="bg-card rounded-lg w-full max-w-4xl border border-border my-4 sm:my-8">
                     <div
-                        class="sticky top-0 bg-gradient-to-r from-primary/10 to-primary/5 border-b border-border p-6 flex items-center justify-between backdrop-blur-2xl">
-                        <h2 class="text-xl font-bold">Edit Student Application</h2>
+                        class="sticky top-0 bg-gradient-to-r from-primary/10 to-primary/5 border-b border-border p-4 sm:p-6 flex items-center justify-between backdrop-blur-2xl">
+                        <h2 class="text-lg sm:text-xl font-bold">Edit Student Application</h2>
                         <button @click="showEditModal = false" class="text-muted-foreground hover:text-foreground">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -456,7 +500,7 @@
                             </svg>
                         </button>
                     </div>
-                    <div class="p-6 space-y-6 max-h-[calc(100vh-200px)] overflow-y-auto">
+                    <div class="p-4 sm:p-6 space-y-6 max-h-[calc(100vh-200px)] overflow-y-auto">
                         <!-- Display validation errors -->
                         <div v-if="editErrors && Object.keys(editErrors).length > 0"
                              class="p-4 bg-red-500/10 border border-red-500/20 rounded-lg">
@@ -582,7 +626,7 @@
                                             <div
                                                 class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block z-50">
                                                 <div
-                                                    class="bg-card border border-border rounded-lg shadow-lg p-3 whitespace-nowrap text-sm">
+                                                    class="bg-card border border-border rounded-lg shadow-lg p-3 w-max max-w-[16rem] text-sm">
                                                     <p class="font-semibold text-primary mb-2">Selected Schools:</p>
                                                     <ul class="space-y-1 text-muted-foreground">
                                                         <li v-for="(schoolId, idx) in editForm.schools_of_choice.slice(0, 4)"
@@ -672,7 +716,7 @@
                                             <div
                                                 class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block z-50">
                                                 <div
-                                                    class="bg-card border border-border rounded-lg shadow-lg p-3 whitespace-nowrap text-sm">
+                                                    class="bg-card border border-border rounded-lg shadow-lg p-3 w-max max-w-[16rem] text-sm">
                                                     <p class="font-semibold text-primary mb-2">Selected Countries:</p>
                                                     <ul class="space-y-1 text-muted-foreground">
                                                         <li v-for="(countryId, idx) in editForm.country_of_preference.slice(0, 4)"
@@ -767,7 +811,7 @@
                         <div class="space-y-2">
                             <label for="editDocuments" class="text-sm font-medium">Application Documents</label>
                             <div
-                                class="border-2 border-dashed border-border rounded-lg p-8 text-center hover:border-primary transition-all duration-300 cursor-pointer"
+                                class="border-2 border-dashed border-border rounded-lg p-6 sm:p-8 text-center hover:border-primary transition-all duration-300 cursor-pointer"
                                 :class="{ 'bg-primary/5 border-primary': editIsDragOver }"
                                 @click="$refs.editDocumentInput.click()"
                                 @drop.prevent="handleEditDrop"
@@ -788,15 +832,15 @@
                                 <ul class="space-y-2">
                                     <li v-for="(file, index) in editForm.application_documents" :key="index"
                                         class="text-sm text-muted-foreground flex items-center justify-between bg-muted/50 p-3 rounded border border-border">
-                                        <div class="flex items-center gap-2 flex-1">
+                                        <div class="flex items-center gap-2 flex-1 min-w-0">
                                             <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor"
                                                  viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round"
                                                       stroke-width="2"
                                                       d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                                             </svg>
-                                            <div>
-                                                <div class="font-medium text-foreground">
+                                            <div class="min-w-0">
+                                                <div class="font-medium text-foreground break-all">
                                                     {{ typeof file === 'object' ? file.name : file }}
                                                 </div>
                                                 <div class="text-xs" v-if="typeof file === 'object'">
@@ -827,7 +871,7 @@
                         <!-- Added loading overlay with theme-colored spinner after successful submission -->
                         <div v-if="editSuccess" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
                             <div
-                                class="bg-card rounded-xl p-8 text-center border border-border shadow-2xl animate-scale-in">
+                                class="bg-card rounded-xl p-6 sm:p-8 mx-4 text-center border border-border shadow-2xl animate-scale-in">
                                 <svg class="w-16 h-16 text-primary mx-auto mb-4 animate-spin" fill="none"
                                      stroke="currentColor" viewBox="0 0 24 24">
                                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
@@ -841,7 +885,7 @@
                         </div>
 
                         <!-- Action Buttons -->
-                        <div class="flex items-center justify-end gap-3 pt-4 border-t border-border">
+                        <div class="flex flex-col-reverse sm:flex-row sm:items-center justify-end gap-3 pt-4 border-t border-border">
                             <button @click="showEditModal = false"
                                     class="px-6 py-3 border border-border rounded-lg hover:bg-muted transition-all">
                                 Cancel

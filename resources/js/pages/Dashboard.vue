@@ -1,19 +1,19 @@
 <template>
     <div class="min-h-screen bg-background animate-fade-in">
-        <main class="container mx-auto px-6 py-8">
+        <main class="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
             <div v-if="loading" class="flex items-center justify-center py-12">
                 <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
             </div>
 
             <div v-else>
                 <!-- Stats Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 mb-8">
+                <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3 sm:gap-6 mb-6 sm:mb-8">
                     <div v-for="(stat, index) in stats" :key="index"
-                         class="glass-card p-6 rounded-xl animate-slide-up hover:shadow-lg hover:border-primary transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+                         class="glass-card p-4 sm:p-6 rounded-xl animate-slide-up hover:shadow-lg hover:border-primary transition-all duration-300 hover:-translate-y-1 cursor-pointer"
                          @click="filterStudentsByStatus(stat)"
                          :style="{ animationDelay: `${index * 0.1}s` }">
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="w-12 h-12 rounded-lg flex items-center justify-center" :class="stat.bgColor">
+                        <div class="flex items-center justify-between mb-3 sm:mb-4">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center" :class="stat.bgColor">
                                 <svg class="w-6 h-6" :class="stat.iconColor" fill="none" stroke="currentColor"
                                      viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -22,17 +22,17 @@
                             </div>
                             <span class="text-xs font-medium" :class="stat.changeColor">{{ stat.change }}</span>
                         </div>
-                        <div class="text-3xl font-bold mb-1">{{ stat.value }}</div>
-                        <div class="text-sm text-muted-foreground">{{ stat.label }}</div>
+                        <div class="text-2xl sm:text-3xl font-bold mb-1">{{ stat.value }}</div>
+                        <div class="text-xs sm:text-sm text-muted-foreground">{{ stat.label }}</div>
                     </div>
                 </div>
 
                 <!-- Monthly Applications Bar Chart -->
-                <div class="mb-8">
-                    <div class="glass-card rounded-xl p-6 animate-slide-up border-l-4 border-primary"
+                <div class="mb-6 sm:mb-8">
+                    <div class="glass-card rounded-xl p-4 sm:p-6 animate-slide-up border-l-4 border-primary"
                          style="animation-delay: 0.3s;">
-                        <h3 class="font-bold mb-6">Monthly Applications Overview</h3>
-                        <div class="h-80">
+                        <h3 class="font-bold mb-4 sm:mb-6">Monthly Applications Overview</h3>
+                        <div class="h-64 sm:h-80">
                             <BarChart v-if="monthlyChartData" :data="monthlyChartData" label="Applications"/>
                             <div v-else class="flex items-center justify-center h-full text-muted-foreground">No data
                                 available
@@ -42,11 +42,11 @@
                 </div>
 
                 <!-- Monthly Agent SignUp -->
-                <div class="mb-8" v-if="isCounselor">
-                    <div class="glass-card rounded-xl p-6 animate-slide-up border-l-4 border-primary"
+                <div class="mb-6 sm:mb-8" v-if="isCounselor">
+                    <div class="glass-card rounded-xl p-4 sm:p-6 animate-slide-up border-l-4 border-primary"
                          style="animation-delay: 0.3s;">
-                        <h3 class="font-bold mb-6">Monthly Agent SignUp</h3>
-                        <div class="h-80">
+                        <h3 class="font-bold mb-4 sm:mb-6">Monthly Agent SignUp</h3>
+                        <div class="h-64 sm:h-80">
                             <BarChart v-if="monthlyAgentSignUpData" :data="monthlyAgentSignUpData" label="Agent Signup"/>
                             <div v-else class="flex items-center justify-center h-full text-muted-foreground">No data
                                 available
@@ -56,21 +56,21 @@
                 </div>
 
                 <!-- Line Chart & Status Chart -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-                    <div class="glass-card rounded-xl p-6 animate-slide-up border-l-4 border-primary"
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6 sm:mb-8">
+                    <div class="glass-card rounded-xl p-4 sm:p-6 animate-slide-up border-l-4 border-primary"
                          style="animation-delay: 0.4s;">
-                        <h3 class="font-bold mb-6">Applications Trend</h3>
-                        <div class="h-80">
+                        <h3 class="font-bold mb-4 sm:mb-6">Applications Trend</h3>
+                        <div class="h-64 sm:h-80">
                             <LineChart v-if="applicationsChartData" :data="applicationsChartData"/>
                             <div v-else class="flex items-center justify-center h-full text-muted-foreground">No data
                                 available
                             </div>
                         </div>
                     </div>
-                    <div class="glass-card rounded-xl p-6 animate-slide-up border-l-4 border-primary"
+                    <div class="glass-card rounded-xl p-4 sm:p-6 animate-slide-up border-l-4 border-primary"
                          style="animation-delay: 0.5s;">
-                        <h3 class="font-bold mb-6">Applications by Status</h3>
-                        <div class="h-80 overflow-y-auto">
+                        <h3 class="font-bold mb-4 sm:mb-6">Applications by Status</h3>
+                        <div class="h-64 sm:h-80 overflow-y-auto">
                             <div :style="{ height: statusChartHeight }">
                                 <HorizontalBarChart v-if="statusChartData" :data="statusChartData"/>
                                 <div v-else class="flex items-center justify-center h-full text-muted-foreground">
@@ -83,8 +83,25 @@
 
                 <!-- Students Table & Sidebar -->
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div class="lg:col-span-2 glass-card rounded-xl p-6 animate-slide-up border-t-2 border-primary">
-                        <div class="overflow-x-auto">
+                    <div class="lg:col-span-2 glass-card rounded-xl p-4 sm:p-6 animate-slide-up border-t-2 border-primary min-w-0">
+                        <!-- Mobile card list -->
+                        <div class="md:hidden divide-y divide-border">
+                            <div v-for="student in limitedStudents" :key="student.id" class="py-3 flex items-start gap-3">
+                                <div
+                                    class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <span class="text-primary text-sm font-medium">{{ student.initials }}</span>
+                                </div>
+                                <div class="min-w-0 flex-1 text-sm">
+                                    <div class="font-medium break-words">{{ student.name }}</div>
+                                    <div class="text-muted-foreground break-all">{{ student.email }}</div>
+                                    <div class="text-muted-foreground">
+                                        {{ [student.phone, student.gender, student.country].filter(Boolean).join(' / ') }}
+                                    </div>
+                                    <div class="text-xs text-muted-foreground mt-1">{{ student.date }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hidden md:block overflow-x-auto">
                             <table class="w-full">
                                 <thead>
                                 <tr class="border-b-2 border-primary">
@@ -134,7 +151,7 @@
                     <!-- Sidebar -->
                     <div class="space-y-6">
                         <!-- Quick Actions - Only show for Agents -->
-                        <div v-if="isAgent" class="glass-card rounded-xl p-6 animate-slide-up border-l-4 border-primary"
+                        <div v-if="isAgent" class="glass-card rounded-xl p-4 sm:p-6 animate-slide-up border-l-4 border-primary"
                              style="animation-delay: 0.2s;">
                             <h3 class="font-bold mb-4">Quick Actions</h3>
                             <div class="space-y-3">
@@ -169,7 +186,7 @@
                             </div>
                         </div>
 
-                        <div class="glass-card rounded-xl p-6 animate-slide-up border-l-4 border-primary"
+                        <div class="glass-card rounded-xl p-4 sm:p-6 animate-slide-up border-l-4 border-primary"
                              style="animation-delay: 0.3s;">
                             <h3 class="font-bold mb-4">Recent Activity</h3>
                             <div v-if="loadingActivity" class="flex items-center justify-center py-8">

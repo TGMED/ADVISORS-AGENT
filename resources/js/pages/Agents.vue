@@ -1,8 +1,8 @@
 <template>
     <div class="min-h-screen bg-background animate-fade-in">
-        <main class="container mx-auto px-6 py-8">
+        <main class="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
             <div class="mb-8 animate-slide-up">
-                <h1 class="text-3xl font-bold mb-2">Agent List</h1>
+                <h1 class="text-2xl sm:text-3xl font-bold mb-2">Agent List</h1>
                 <p class="text-muted-foreground">Manage and track all Agent details</p>
             </div>
 
@@ -19,12 +19,12 @@
                 <button @click="fetchAgents" class="ml-4 underline hover:no-underline">Retry</button>
             </div>
 
-            <div v-else class="glass-card rounded-xl p-6 animate-slide-up" style="animation-delay: 0.1s;">
+            <div v-else class="glass-card rounded-xl p-4 sm:p-6 animate-slide-up" style="animation-delay: 0.1s;">
                 <div class="flex flex-col gap-4 mb-6">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-4">
                         <div
-                            class="flex-1 flex flex-col md:flex-row items-stretch md:items-center space-y-4 md:space-y-0 md:space-x-4">
-                            <div class="flex-1 relative">
+                            class="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-row lg:items-center gap-3">
+                            <div class="relative sm:col-span-2 lg:flex-1 lg:min-w-48">
                                 <svg class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
                                      fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -37,24 +37,24 @@
                                     class="w-full pl-10 pr-4 py-2.5 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
                                 />
                             </div>
-                            <div class="flex items-center space-x-2">
+                            <div class="flex items-center gap-2">
                                 <label class="text-sm text-muted-foreground whitespace-nowrap">From:</label>
                                 <input
                                     v-model="startDate"
                                     type="date"
-                                    class="px-3 py-2.5 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200 text-sm"
+                                    class="px-3 py-2.5 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200 text-sm w-full min-w-0 lg:w-auto"
                                 />
                             </div>
-                            <div class="flex items-center space-x-2">
+                            <div class="flex items-center gap-2">
                                 <label class="text-sm text-muted-foreground whitespace-nowrap">To:</label>
                                 <input
                                     v-model="endDate"
                                     type="date"
-                                    class="px-3 py-2.5 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200 text-sm"
+                                    class="px-3 py-2.5 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200 text-sm w-full min-w-0 lg:w-auto"
                                 />
                             </div>
                         </div>
-                        <div class="flex items-center space-x-2">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 xl:flex">
                             <button
                                 @click="applyDateFilter"
                                 class="px-6 py-2.5 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-all duration-200 hover:shadow-lg hover:scale-105 flex items-center space-x-2 justify-center"
@@ -73,13 +73,65 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                           d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
                                 </svg>
-                                <span>Download CSV</span>
+                                <span class="whitespace-nowrap">Download CSV</span>
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <div class="overflow-x-auto">
+                <!-- Mobile/tablet card list -->
+                <div class="lg:hidden space-y-3">
+                    <div v-for="agent in filteredAgents" :key="agent.id"
+                         class="p-4 bg-muted/30 rounded-lg border border-border space-y-3">
+                        <div class="flex items-start justify-between gap-3">
+                            <div class="min-w-0">
+                                <div class="font-medium break-words">{{ agent.firstName }} {{ agent.lastName }}</div>
+                                <div class="text-sm text-muted-foreground break-words">{{ agent.agencyName || 'N/A' }}</div>
+                            </div>
+                            <span class="px-2 py-1 rounded-full text-xs font-medium flex-shrink-0"
+                                  :class="agent.isActive ? 'bg-green-500/10 text-green-600' : 'bg-red-500/10 text-red-600'">
+                                {{ agent.isActive ? 'Active' : 'Inactive' }}
+                            </span>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                            <div>
+                                <p class="text-xs text-muted-foreground mb-1">Email</p>
+                                <p class="break-all">{{ agent.email }}</p>
+                            </div>
+                            <div>
+                                <p class="text-xs text-muted-foreground mb-1">Phone Number</p>
+                                <p class="break-all">{{ agent.phone || 'N/A' }}</p>
+                            </div>
+                            <div>
+                                <p class="text-xs text-muted-foreground mb-1">BRN</p>
+                                <p class="break-all">{{ agent.businessRegistrationNumber || 'N/A' }}</p>
+                            </div>
+                            <div>
+                                <p class="text-xs text-muted-foreground mb-1">BDM Officer</p>
+                                <p>{{ agent.bdmOfficer?.fullName?.trim() || 'N/A' }}</p>
+                            </div>
+                            <div>
+                                <p class="text-xs text-muted-foreground mb-1">Joined Date</p>
+                                <p>{{ agent.createdAt }}</p>
+                            </div>
+                            <div class="flex gap-6">
+                                <div>
+                                    <p class="text-xs text-muted-foreground mb-1">Students</p>
+                                    <p class="font-medium">{{ agent.totalStudents }}</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-muted-foreground mb-1">Applications</p>
+                                    <p class="font-medium">{{ agent.totalApplications }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div v-if="filteredAgents.length === 0" class="py-8 text-center text-muted-foreground text-sm">
+                        No agents found
+                    </div>
+                </div>
+
+                <div class="hidden lg:block overflow-x-auto">
                     <table class="w-full">
                         <thead>
                         <tr class="border-b border-border">
@@ -160,7 +212,7 @@
 
                         <!-- Empty State -->
                         <tr v-if="filteredAgents.length === 0">
-                            <td colspan="9" class="py-8 text-center text-muted-foreground text-sm">
+                            <td colspan="10" class="py-8 text-center text-muted-foreground text-sm">
                                 No agents found
                             </td>
                         </tr>
@@ -170,7 +222,7 @@
 
                 <div v-if="agents.length > 0" class="mt-6 space-y-4">
                     <!-- Items per page selector -->
-                    <div class="flex items-center justify-between flex-wrap gap-4">
+                    <div class="flex flex-col lg:flex-row items-center justify-between gap-4">
                         <div class="flex items-center gap-3">
                             <label for="itemsPerPage" class="text-sm text-muted-foreground">Items per page:</label>
                             <select v-model.number="itemsPerPage" id="itemsPerPage"
@@ -191,7 +243,7 @@
                             <button
                                 @click="updatePage(Math.max(1, currentPage - 1))"
                                 :disabled="currentPage === 1"
-                                class="px-3 py-2 border border-border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-muted transition-all"
+                                class="px-3 py-2 text-sm border border-border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-muted transition-all"
                             >
                                 Previous
                             </button>
@@ -201,7 +253,7 @@
                                     :key="page"
                                     @click="updatePage(page)"
                                     :class="currentPage === page ? 'bg-primary text-primary-foreground' : 'border border-border hover:bg-muted'"
-                                    class="px-3 py-2 rounded-lg transition-all"
+                                    class="min-w-9 px-3 py-2 text-sm rounded-lg transition-all"
                                 >
                                     {{ page }}
                                 </button>
@@ -209,7 +261,7 @@
                             <button
                                 @click="updatePage(Math.min(pagination.lastPage, currentPage + 1))"
                                 :disabled="currentPage === pagination.lastPage"
-                                class="px-3 py-2 border border-border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-muted transition-all"
+                                class="px-3 py-2 text-sm border border-border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-muted transition-all"
                             >
                                 Next
                             </button>
