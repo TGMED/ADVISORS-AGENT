@@ -1,6 +1,6 @@
 <template>
     <div class="min-h-screen bg-background animate-fade-in">
-        <main class="container mx-auto px-6 py-8">
+        <main class="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
             <div class="mb-8 animate-slide-up">
                 <div class="flex items-center gap-4 mb-4">
                     <router-link to="/applications" class="text-primary hover:underline flex items-center gap-2">
@@ -10,7 +10,7 @@
                         Back to Applications
                     </router-link>
                 </div>
-                <h1 class="text-3xl font-bold mb-2">Application Details</h1>
+                <h1 class="text-2xl sm:text-3xl font-bold mb-2">Application Details</h1>
                 <p class="text-muted-foreground">View application information</p>
             </div>
 
@@ -26,7 +26,7 @@
                 {{ error }}
             </div>
 
-            <div v-else class="glass-card rounded-xl p-6 animate-slide-up">
+            <div v-else class="glass-card rounded-xl p-4 sm:p-6 animate-slide-up">
                 <!-- Student Information -->
                 <div class="mb-8">
                     <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
@@ -36,7 +36,7 @@
                         </svg>
                         Student Information
                     </h2>
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                         <div>
                             <label class="text-sm text-muted-foreground">Full Name</label>
                             <p class="font-medium">{{ application.studentName }}</p>
@@ -146,14 +146,14 @@
                     </h2>
                     <div v-if="application.documents && application.documents.length > 0" class="space-y-3">
                         <div v-for="(doc, idx) in application.documents" :key="idx"
-                             class="flex items-center justify-between p-4 bg-secondary/50 rounded-lg hover:bg-secondary/70 transition-colors">
-                            <div class="flex items-center gap-3">
-                                <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                             class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-secondary/50 rounded-lg hover:bg-secondary/70 transition-colors">
+                            <div class="flex items-center gap-3 min-w-0">
+                                <svg class="w-8 h-8 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                           d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
                                 </svg>
-                                <div>
-                                    <p class="font-medium">{{ getDocumentName(doc) }}</p>
+                                <div class="min-w-0">
+                                    <p class="font-medium break-all">{{ getDocumentName(doc) }}</p>
                                     <p class="text-sm text-muted-foreground">Document {{ idx + 1 }}</p>
                                 </div>
                             </div>
@@ -190,11 +190,11 @@
                 </div>
 
                 <!-- Action Buttons -->
-                <div class="flex gap-4 justify-end">
+                <div class="flex flex-col sm:flex-row gap-4 justify-end">
                     <router-link
                         v-if="isCounselor"
                         :to="`/applications/${applicationId}/edit`"
-                        class="px-6 py-2.5 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-all duration-200 hover:shadow-lg hover:scale-105">
+                        class="px-6 py-2.5 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-all duration-200 hover:shadow-lg hover:scale-105 text-center">
                         Edit Application
                     </router-link>
                 </div>
@@ -208,9 +208,9 @@
                 class="bg-card rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-border shadow-2xl">
                 <!-- Modal Header -->
                 <div
-                    class="sticky top-0 bg-gradient-to-r from-primary/10 to-primary/5 border-b border-border p-6 flex items-center justify-between backdrop-blur-2xl">
+                    class="sticky top-0 bg-gradient-to-r from-primary/10 to-primary/5 border-b border-border p-4 sm:p-6 flex items-center justify-between backdrop-blur-2xl">
                     <div>
-                        <h2 class="text-xl font-bold">Manage Documents</h2>
+                        <h2 class="text-lg sm:text-xl font-bold">Manage Documents</h2>
                         <p class="text-sm text-muted-foreground mt-1">Add, view, or remove application documents</p>
                     </div>
                     <button type="button" @click="closeModal"
@@ -223,7 +223,7 @@
                 </div>
 
                 <!-- Modal Body -->
-                <div class="p-6 space-y-6">
+                <div class="p-4 sm:p-6 space-y-6">
                     <!-- Upload Section -->
                     <div class="space-y-4">
                         <h3 class="text-sm font-semibold text-primary uppercase tracking-wide">Add New Documents</h3>
@@ -254,15 +254,15 @@
                         <div v-if="newFiles.length > 0" class="space-y-2">
                             <p class="text-xs text-muted-foreground font-medium mb-2">New files to upload:</p>
                             <div v-for="(file, idx) in newFiles" :key="idx"
-                                 class="p-3 bg-muted/30 rounded-lg border border-border/50 flex items-center justify-between">
-                                <div class="flex items-center gap-2">
+                                 class="p-3 bg-muted/30 rounded-lg border border-border/50 flex items-center justify-between gap-3">
+                                <div class="flex items-center gap-2 min-w-0">
                                     <svg class="w-4 h-4 text-primary flex-shrink-0" fill="none" stroke="currentColor"
                                          viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                               d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                     </svg>
-                                    <div>
-                                        <p class="font-medium text-sm">{{ file.name }}</p>
+                                    <div class="min-w-0">
+                                        <p class="font-medium text-sm break-all">{{ file.name }}</p>
                                         <p class="text-xs text-muted-foreground">{{ formatFileSize(file.size) }}</p>
                                     </div>
                                 </div>
@@ -282,15 +282,15 @@
                         <h3 class="text-sm font-semibold text-primary uppercase tracking-wide">Existing Documents</h3>
                         <div v-if="application.documents && application.documents.length > 0" class="space-y-2">
                             <div v-for="(doc, idx) in application.documents" :key="idx"
-                                 class="p-3 bg-muted/30 rounded-lg border border-border/50 flex items-center justify-between">
-                                <div class="flex items-center gap-3">
+                                 class="p-3 bg-muted/30 rounded-lg border border-border/50 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                                <div class="flex items-center gap-3 min-w-0">
                                     <svg class="w-4 h-4 text-primary flex-shrink-0" fill="none" stroke="currentColor"
                                          viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                               d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
                                     </svg>
-                                    <div>
-                                        <p class="font-medium text-sm">{{ getDocumentName(doc) }}</p>
+                                    <div class="min-w-0">
+                                        <p class="font-medium text-sm break-all">{{ getDocumentName(doc) }}</p>
                                         <p class="text-xs text-muted-foreground">Document {{ idx + 1 }}</p>
                                     </div>
                                 </div>
@@ -329,7 +329,7 @@
                 </div>
 
                 <!-- Modal Footer -->
-                <div class="flex items-center justify-end gap-3 p-6 border-t border-border">
+                <div class="flex flex-col-reverse sm:flex-row sm:items-center justify-end gap-3 p-4 sm:p-6 border-t border-border">
                     <button
                         type="button"
                         @click="closeModal"

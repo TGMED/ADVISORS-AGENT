@@ -1,6 +1,6 @@
 <template>
     <div class="min-h-screen bg-background animate-fade-in">
-        <main class="container mx-auto px-6 py-8">
+        <main class="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
             <div class="mb-8 animate-slide-up">
                 <div class="flex items-center gap-4 mb-4">
                     <router-link :to="`/applications`"
@@ -11,7 +11,7 @@
                         Back to Application
                     </router-link>
                 </div>
-                <h1 class="text-3xl font-bold mb-2">Edit Application</h1>
+                <h1 class="text-2xl sm:text-3xl font-bold mb-2">Edit Application</h1>
                 <p class="text-muted-foreground">Update application information and status</p>
             </div>
 
@@ -27,7 +27,7 @@
                 {{ error }}
             </div>
 
-            <div v-else class="glass-card rounded-xl p-6 animate-slide-up">
+            <div v-else class="glass-card rounded-xl p-4 sm:p-6 animate-slide-up">
                 <form @submit.prevent="updateApplication" class="space-y-6">
                     <!-- Student Information (Read-only) -->
                     <div class="mb-8">
@@ -132,14 +132,14 @@
                     </div>
 
                     <!-- Action Buttons -->
-                    <div class="flex gap-4 justify-end pt-4 border-t border-border">
+                    <div class="flex flex-col-reverse sm:flex-row gap-3 sm:gap-4 justify-end pt-4 border-t border-border">
                         <router-link :to="`/applications/${applicationId}`"
-                                     class="px-6 py-2.5 bg-muted text-foreground rounded-lg font-medium hover:bg-muted/80 transition-all duration-200">
+                                     class="px-6 py-2.5 bg-muted text-foreground rounded-lg font-medium hover:bg-muted/80 transition-all duration-200 text-center">
                             Cancel
                         </router-link>
 
                         <button type="submit" :disabled="submitting"
-                                class="px-6 py-2.5 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-all duration-200 hover:shadow-lg hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2">
+                                class="px-6 py-2.5 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-all duration-200 hover:shadow-lg hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
                             <span v-if="submitting">Updating...</span>
                             <span v-else>Update Application</span>
                         </button>

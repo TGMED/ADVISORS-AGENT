@@ -1,6 +1,6 @@
 <template>
     <div class="min-h-screen bg-background animate-fade-in">
-        <main class="container mx-auto px-6 py-8 max-w-4xl">
+        <main class="container mx-auto px-4 sm:px-6 py-6 sm:py-8 max-w-4xl">
 
             <form @submit.prevent="handleSubmit" class="space-y-8 animate-fade-in">
                 <div v-if="error" class="p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-500 text-sm">
@@ -8,7 +8,7 @@
                 </div>
 
                 <div v-if="success" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-                    <div class="bg-card rounded-xl p-8 text-center border border-border shadow-2xl animate-scale-in">
+                    <div class="bg-card rounded-xl p-6 sm:p-8 mx-4 text-center border border-border shadow-2xl animate-scale-in">
                         <svg class="w-16 h-16 text-emerald-500 mx-auto mb-4 animate-spin" fill="none"
                              stroke="currentColor" viewBox="0 0 24 24">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
@@ -22,7 +22,7 @@
                 </div>
 
                 <!-- Personal Information -->
-                <div class="glass-card rounded-xl p-6 animate-slide-up">
+                <div class="glass-card rounded-xl p-4 sm:p-6 animate-slide-up">
                     <h2 class="text-lg font-bold mb-6">Personal Information</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="space-y-2 group">
@@ -122,7 +122,7 @@
                 </div>
 
                 <!-- Submit Button -->
-                <div class="flex gap-4 pt-6">
+                <div class="flex flex-col-reverse sm:flex-row gap-3 sm:gap-4 pt-6">
                     <router-link to="/students"
                                  class="flex-1 px-6 py-3 border border-border rounded-lg font-medium hover:bg-muted transition-all text-center">
                         Cancel

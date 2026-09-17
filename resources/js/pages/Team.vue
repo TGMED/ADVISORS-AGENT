@@ -1,9 +1,9 @@
 <template>
     <div class="min-h-screen bg-background animate-fade-in">
 
-        <main class="container mx-auto px-6 py-8">
+        <main class="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
             <div class="mb-8 animate-slide-up">
-                <h2 class="text-2xl font-bold mb-2">Business Development Officers</h2>
+                <h2 class="text-xl sm:text-2xl font-bold mb-2">Business Development Officers</h2>
                 <p class="text-muted-foreground">Manage and view your team of BDO officers</p>
             </div>
 
@@ -12,9 +12,9 @@
             </div>
 
             <div v-else>
-                <div class="glass-card rounded-xl p-6 mb-6 animate-slide-up" style="animation-delay: 0.1s;">
-                    <div class="flex items-center justify-between mb-6">
-                        <div class="flex-1 relative max-w-md">
+                <div class="glass-card rounded-xl p-4 sm:p-6 mb-6 animate-slide-up" style="animation-delay: 0.1s;">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+                        <div class="flex-1 relative sm:max-w-md">
                             <svg class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
                                  fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -37,7 +37,7 @@
                         <div
                             v-for="(officer, index) in filteredOfficers"
                             :key="officer.id"
-                            class="glass-card p-6 rounded-xl hover:shadow-lg transition-all duration-300 hover:-translate-y-1 animate-slide-up"
+                            class="glass-card p-4 sm:p-6 rounded-xl hover:shadow-lg transition-all duration-300 hover:-translate-y-1 animate-slide-up"
                             :style="{ animationDelay: `${index * 0.1}s` }"
                         >
                             <div class="flex items-start justify-between mb-4">
@@ -65,7 +65,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                               d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                                     </svg>
-                                    <span class="text-muted-foreground">{{ officer.email }}</span>
+                                    <span class="text-muted-foreground break-all">{{ officer.email }}</span>
                                 </div>
                                 <div class="flex items-center space-x-2 text-sm">
                                     <svg class="w-4 h-4 text-muted-foreground" fill="none" stroke="currentColor"
@@ -102,7 +102,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 animate-slide-up" style="animation-delay: 0.3s;">
-                    <div class="glass-card p-6 rounded-xl">
+                    <div class="glass-card p-4 sm:p-6 rounded-xl">
                         <div class="flex items-center space-x-3 mb-2">
                             <div class="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center">
                                 <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -117,7 +117,7 @@
                         </div>
                     </div>
 
-                    <div class="glass-card p-6 rounded-xl">
+                    <div class="glass-card p-4 sm:p-6 rounded-xl">
                         <div class="flex items-center space-x-3 mb-2">
                             <div class="w-10 h-10 bg-emerald-500/20 rounded-lg flex items-center justify-center">
                                 <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor"
@@ -133,7 +133,7 @@
                         </div>
                     </div>
 
-                    <div class="glass-card p-6 rounded-xl">
+                    <div class="glass-card p-4 sm:p-6 rounded-xl">
                         <div class="flex items-center space-x-3 mb-2">
                             <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">
                                 <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor"

@@ -1,6 +1,6 @@
 <template>
     <div class="min-h-screen bg-background animate-fade-in">
-        <main class="container mx-auto px-6 py-8 max-w-4xl">
+        <main class="container mx-auto px-4 sm:px-6 py-6 sm:py-8 max-w-4xl">
 
             <form @submit.prevent="handleSubmit" class="space-y-8">
                 <!-- Error/Success Messages -->
@@ -9,7 +9,7 @@
                 </div>
 
                 <div v-if="success" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-                    <div class="bg-card rounded-xl p-8 text-center border border-border shadow-2xl animate-scale-in">
+                    <div class="bg-card rounded-xl p-6 sm:p-8 mx-4 text-center border border-border shadow-2xl animate-scale-in">
                         <svg class="w-16 h-16 text-emerald-500 mx-auto mb-4 animate-spin" fill="none"
                              stroke="currentColor" viewBox="0 0 24 24">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
@@ -23,7 +23,7 @@
                 </div>
 
                 <!-- Personal Information -->
-                <div class="glass-card rounded-xl p-6 animate-slide-up">
+                <div class="glass-card rounded-xl p-4 sm:p-6 animate-slide-up">
                     <h2 class="text-lg font-bold mb-6">Personal Information</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="space-y-2 group">
@@ -156,7 +156,7 @@
                 </div>
 
                 <!-- Academic Preferences -->
-                <div class="glass-card rounded-xl p-6 animate-slide-up" style="animation-delay: 0.1s;">
+                <div class="glass-card rounded-xl p-4 sm:p-6 animate-slide-up" style="animation-delay: 0.1s;">
                     <h2 class="text-lg font-bold mb-6">Academic Preferences</h2>
                     <div class="space-y-6 relative">
                         <!-- Desired Course -->
@@ -310,7 +310,7 @@
                 </div>
 
                 <!-- Additional Information -->
-                <div class="glass-card rounded-xl p-6 animate-slide-up" style="animation-delay: 0.2s;">
+                <div class="glass-card rounded-xl p-4 sm:p-6 animate-slide-up" style="animation-delay: 0.2s;">
                     <h2 class="text-lg font-bold mb-6">Additional Information</h2>
                     <div class="space-y-6">
                         <div class="space-y-2 group">
@@ -341,7 +341,7 @@
 
                             <label class="text-sm font-medium">Application Documents</label>
                             <div
-                                class="border-2 border-dashed border-border rounded-lg p-8 text-center hover:border-primary transition-all duration-300 cursor-pointer mt-1"
+                                class="border-2 border-dashed border-border rounded-lg p-6 sm:p-8 text-center hover:border-primary transition-all duration-300 cursor-pointer mt-1"
                                 :class="{ 'bg-primary/5 border-primary': isDragOver }"
                                 @click="$refs.documentInput.click()"
                                 @drop.prevent="handleDrop"
@@ -358,13 +358,13 @@
                             </div>
                             <div v-if="form.application_documents.length > 0" class="mt-4 space-y-2">
                                 <div v-for="(file, index) in form.application_documents" :key="index"
-                                     class="flex items-center justify-between bg-muted/50 p-3 rounded border border-border">
-                                    <div class="flex items-center gap-2">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                     class="flex items-center justify-between gap-3 bg-muted/50 p-3 rounded border border-border">
+                                    <div class="flex flex-wrap items-center gap-2 min-w-0">
+                                        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                   d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                                         </svg>
-                                        <span class="text-sm">{{ file.name }}</span>
+                                        <span class="text-sm break-all">{{ file.name }}</span>
                                         <span class="text-xs text-muted-foreground">({{ (file.size / 1024).toFixed(2) }} KB)</span>
                                     </div>
                                     <button type="button" @click="removeFile(index)"
@@ -379,9 +379,9 @@
                 </div>
 
                 <!-- Action Buttons -->
-                <div class="flex items-center justify-end space-x-4 animate-slide-up" style="animation-delay: 0.3s;">
+                <div class="flex flex-col-reverse sm:flex-row sm:items-center justify-end gap-3 sm:gap-4 animate-slide-up" style="animation-delay: 0.3s;">
                     <router-link to="/dashboard"
-                                 class="px-6 py-3 border border-border rounded-lg font-medium hover:bg-muted transition-all duration-200">
+                                 class="px-6 py-3 border border-border rounded-lg font-medium hover:bg-muted transition-all duration-200 text-center">
                         Cancel
                     </router-link>
                     <button
@@ -400,7 +400,7 @@
                 <div
                     class="bg-card rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-border shadow-2xl">
                     <div
-                        class="sticky top-0 bg-gradient-to-r from-primary/10 to-primary/5 border-b border-border p-6 flex items-center justify-between backdrop-blur-2xl">
+                        class="sticky top-0 bg-gradient-to-r from-primary/10 to-primary/5 border-b border-border p-4 sm:p-6 flex items-center justify-between backdrop-blur-2xl">
                         <div>
                             <h2 class="text-xl font-bold">Review Your Application</h2>
                             <p class="text-sm text-muted-foreground mt-1">Please verify your details before
@@ -414,12 +414,12 @@
                             </svg>
                         </button>
                     </div>
-                    <div class="p-6 space-y-6">
+                    <div class="p-4 sm:p-6 space-y-6">
                         <!-- Personal Info -->
                         <div class="space-y-4">
                             <h3 class="text-sm font-semibold text-primary uppercase tracking-wide">Personal
                                 Information</h3>
-                            <div class="grid grid-cols-2 gap-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div class="p-3 bg-muted/30 rounded-lg border border-border/50">
                                     <p class="text-xs text-muted-foreground font-medium mb-1">Full Name</p>
                                     <p class="font-medium">{{ form.first_name }} {{ form.middle_name }}
@@ -505,8 +505,8 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                               d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                                     </svg>
-                                    <div>
-                                        <p class="font-medium text-sm">{{ file.name }}</p>
+                                    <div class="min-w-0">
+                                        <p class="font-medium text-sm break-all">{{ file.name }}</p>
                                         <p class="text-xs text-muted-foreground">
                                             {{ (file.size / 1024).toFixed(2) }} KB
                                         </p>
@@ -523,7 +523,7 @@
 
                         <div v-if="success" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
                             <div
-                                class="bg-card rounded-xl p-8 text-center border border-border shadow-2xl animate-scale-in">
+                                class="bg-card rounded-xl p-6 sm:p-8 mx-4 text-center border border-border shadow-2xl animate-scale-in">
                                 <svg class="w-16 h-16 text-emerald-500 mx-auto mb-4 animate-spin" fill="none"
                                      stroke="currentColor" viewBox="0 0 24 24">
                                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
@@ -537,7 +537,7 @@
                         </div>
 
                         <!-- Action Buttons -->
-                        <div class="flex items-center justify-end gap-3 pt-4 border-t border-border">
+                        <div class="flex flex-col-reverse sm:flex-row sm:items-center justify-end gap-3 pt-4 border-t border-border">
                             <button type="button" @click="showReviewModal = false"
                                     class="px-6 py-3 border border-border rounded-lg font-medium hover:bg-muted transition-all duration-200">
                                 Go Back & Edit
